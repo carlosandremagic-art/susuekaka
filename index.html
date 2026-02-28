@@ -194,8 +194,90 @@ function verificarSenha(){
     document.getElementById("senhaTela").style.display="none";
     document.getElementById("conteudo").style.display="block";
     iniciarMusica();
-  }else{
-    alert("Que isso Susu,não é possível que errou a senha😠");
+
+    // ------------------------
+    // SLIDER ALEATÓRIO SEM REPETIÇÃO
+    // ------------------------
+    const gallery = document.querySelector('.gallery .slides');
+
+    // Cria lista de arquivos: fotos e vídeos
+    let mediaFiles = [];
+
+    // Fotos
+    for(let f=1; f<=17; f++){
+      mediaFiles.push({type:'img', src:`foto${f}.jpg`});
+    }
+
+    // Vídeos
+    for(let v=1; v<=15; v++){
+      mediaFiles.push({type:'video', src:`video${v}.mp4`, poster:`foto${v}.jpg`});
+    }
+
+    // Função para embaralhar
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--){
+        let j = Math.floor(Math.random() * (i+1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Cria os slides no DOM
+    function criarSlides(arquivos){
+      gallery.innerHTML = '';
+      arquivos.forEach((media, idx)=>{
+        const slide = document.createElement('div');
+        slide.className = 'slide' + (idx===0 ? ' active' : '');
+        if(media.type==='img'){
+          const img = document.createElement('img');
+          img.src = media.src;
+          slide.appendChild(img);
+        } else if(media.type==='video'){
+          const video = document.createElement('video');
+          video.src = media.src;
+          video.poster = media.poster;
+          video.autoplay = true;
+          video.loop = true;
+          video.muted = true;
+          video.playsInline = true;
+          slide.appendChild(video);
+        }
+        gallery.appendChild(slide);
+      });
+      return Array.from(document.querySelectorAll('.slide'));
+    }
+
+    // ------------------------
+    // Inicialização
+    // ------------------------
+    let slideQueue = shuffle([...mediaFiles]); // copia e embaralha
+    let slides = criarSlides(slideQueue);
+    let current = 0;
+
+    // Tempo de exibição de cada slide (em ms)
+    const slideTempo = 4000; // 4s
+
+    function nextSlide(){
+      slides[current].classList.remove('active');
+      if(slides[current].querySelector('video')) slides[current].querySelector('video').pause();
+
+      current++;
+
+      if(current >= slides.length){
+        // todos passaram, embaralha de novo
+        slideQueue = shuffle([...mediaFiles]);
+        slides = criarSlides(slideQueue);
+        current = 0;
+      }
+
+      slides[current].classList.add('active');
+      if(slides[current].querySelector('video')) slides[current].querySelector('video').play();
+    }
+
+    // Inicia o slider
+    setInterval(nextSlide, slideTempo);
+
+  } else {    alert("Que isso Susu,não é possível que errou a senha😠");
   }
 }
 
