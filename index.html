@@ -242,7 +242,7 @@ function criarSlides(arquivos){
 let slideQueue = shuffle([...mediaFiles]);
 let slides = criarSlides(slideQueue);
 let current = 0;
-const slideTempo = 7000; // 7s para mobile carregar
+const slideTempo = 6000; // 6s para mobile carregar
 
 function nextSlide(){
   slides[current].classList.remove('active');
@@ -423,19 +423,21 @@ window.addEventListener('load', () => {
   const intro = document.getElementById('netflixIntro');
   const senhaTela = document.getElementById('senhaTela');
 
-  // Mostra a intro imediatamente
   intro.style.display = 'flex';
 
-  // Depois de 4s, faz fadeOut da intro
+  // Detecta se é mobile
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  const introTime = isMobile ? 2500 : 4000; // 2,5s mobile, 4s desktop
+
   setTimeout(() => {
+    intro.style.transition = 'opacity 1s ease';
     intro.style.opacity = '0';
-    // Remove o intro do fluxo após fadeOut
+
     setTimeout(() => {
       intro.style.display = 'none';
-      // Agora mostra a tela de senha
       senhaTela.style.display = 'flex';
-    }, 1500); // mesma duração do fadeOut
-  }, 4000); // duração da animação inicial
+    }, 1000); // fade de 1s
+  }, introTime);
 });
 
 </script>
