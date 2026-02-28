@@ -168,11 +168,18 @@ button{margin-top:20px;padding:10px 25px;border:none;border-radius:25px;backgrou
 <div id="carta">
 Susu,
 <br><br>
-Desde 17/09/2020 minha vida mudou.<br>
-Você é meu melhor presente.<br>
-Eu te amo infinitamente.
+Desde o dia que você entrou na minha vida tudo mudou.<br>
+Você é meu melhor presente,eu sempre irei escolher você todas as vezes.<br>
+Não consigo ficar sem você,preciso de você ao meu lado.<br>
+Você me faz bem,me faz se sentir vivo.<br>
+Sei que temos nossas brigas e desentendimentos,e nós não ficamos bem com isso.<br>
+Me desculpa por todas as vezes que te deixei chateada,to tentando melhorar dia após dia.<br> 
+Eu te amo infinitamente maior do que qualquer galáxia nesse universo.
 <br><br>
 — Kaká ❤️
+
+<!-- Imagem escondida -->
+  <img id="fotoCarta" src="fotoEspecial.jpg" alt="Foto especial" style="display:none; margin-top:20px; border-radius:15px; width:80%;">
 </div>
 
 <audio id="musica" loop playsinline>
@@ -188,7 +195,7 @@ function verificarSenha(){
     document.getElementById("conteudo").style.display="block";
     iniciarMusica();
   }else{
-    alert("Que isso Susu,não é possível que errou a senha❤️");
+    alert("Que isso Susu,não é possível que errou a senha😠");
   }
 }
 
@@ -236,7 +243,11 @@ setInterval(()=>{
 
 // CARTA
 function mostrarCarta(){
-  document.getElementById("carta").style.display="block";
+  const carta = document.getElementById("carta");
+  carta.style.display = "block";
+
+  const foto = document.getElementById("fotoCarta");
+  foto.style.display = "block"; // mostra a foto
 }
 
 // MÚSICA
