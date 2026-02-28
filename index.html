@@ -93,9 +93,20 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
   transition: opacity 1.5s ease; /* fadeOut via JS */
 }
 .netflix-container{ position:relative; }
-.logoIntro{ font-size:70px;font-weight:900;letter-spacing:10px;color:#e50914;opacity:0;filter:blur(10px);animation:logoReveal 2.5s ease forwards;text-shadow:0 0 10px rgba(229,9,20,0.8),0 0 20px rgba(229,9,20,0.6),0 0 40px rgba(229,9,20,0.4);}
-@keyframes logoReveal{0%{opacity:0;transform:scale(0.7);filter:blur(10px);}60%{opacity:1;filter:blur(0px);}100%{opacity:1;transform:scale(1);filter:blur(0px);}}
-@keyframes fadeOut{to{opacity:0;visibility:hidden;}}
+.logoIntro {
+  font-size:70px;
+  font-weight:900;
+  letter-spacing:10px;
+  color:#e50914;
+  opacity:0;
+  /* filter: blur(10px); <- remover para mobile */
+  animation: logoReveal 1.5s ease forwards;
+  text-shadow: none; /* sombras pesadas podem travar */
+}
+@keyframes logoReveal {
+  0% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
 /* SENHA */
 #senhaTela {
@@ -425,21 +436,19 @@ window.addEventListener('load', () => {
 
   intro.style.display = 'flex';
 
-  // Detecta se é mobile
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  const introTime = isMobile ? 2500 : 4000; // 2,5s mobile, 4s desktop
+  const introTime = isMobile ? 1500 : 4000; // 1,5s mobile, 4s desktop
 
   setTimeout(() => {
-    intro.style.transition = 'opacity 1s ease';
+    intro.style.transition = 'opacity 0.8s ease';
     intro.style.opacity = '0';
 
     setTimeout(() => {
       intro.style.display = 'none';
       senhaTela.style.display = 'flex';
-    }, 1000); // fade de 1s
+    }, 800); // fade de 0.8s
   }, introTime);
 });
-
 </script>
 </body>
 </html>
