@@ -196,86 +196,73 @@ function verificarSenha(){
     iniciarMusica();
 
     // ------------------------
-    // SLIDER ALEATÓRIO SEM REPETIÇÃO
-    // ------------------------
-    const gallery = document.querySelector('.gallery .slides');
+    // SLIDER ALEATÓRIO MOBILE FRIENDLY
+// ------------------------
+const gallery = document.querySelector('.gallery .slides');
 
-    // Cria lista de arquivos: fotos e vídeos
-    let mediaFiles = [];
+// Lista de arquivos
+let mediaFiles = [];
+for(let f=1; f<=17; f++) mediaFiles.push({type:'img', src:`foto${f}.jpg`});
+for(let v=1; v<=15; v++) mediaFiles.push({type:'video', src:`video${v}.mp4`, poster:`foto${v}.jpg`});
 
-    // Fotos
-    for(let f=1; f<=17; f++){
-      mediaFiles.push({type:'img', src:`foto${f}.jpg`});
+// Função para embaralhar
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    let j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+// Cria slides no DOM
+function criarSlides(arquivos){
+  gallery.innerHTML='';
+  arquivos.forEach((media, idx)=>{
+    const slide=document.createElement('div');
+    slide.className='slide'+(idx===0?' active':'');
+    if(media.type==='img'){
+      const img=document.createElement('img');
+      img.src=media.src;
+      slide.appendChild(img);
+    } else if(media.type==='video'){
+      const video=document.createElement('video');
+      video.src=media.src;
+      video.poster=media.poster;
+      video.muted=true; // obrigatório para autoplay mobile
+      video.playsInline=true;
+      video.autoplay=false; // autoplay só quando virar slide
+      slide.appendChild(video);
     }
+    gallery.appendChild(slide);
+  });
+  return Array.from(document.querySelectorAll('.slide'));
+}
 
-    // Vídeos
-    for(let v=1; v<=15; v++){
-      mediaFiles.push({type:'video', src:`video${v}.mp4`, poster:`foto${v}.jpg`});
-    }
+// Inicialização
+let slideQueue = shuffle([...mediaFiles]);
+let slides = criarSlides(slideQueue);
+let current = 0;
+const slideTempo = 7000; // 7s para mobile carregar
 
-    // Função para embaralhar
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--){
-        let j = Math.floor(Math.random() * (i+1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
+function nextSlide(){
+  slides[current].classList.remove('active');
+  const vidAnt = slides[current].querySelector('video');
+  if(vidAnt) vidAnt.pause();
 
-    // Cria os slides no DOM
-    function criarSlides(arquivos){
-      gallery.innerHTML = '';
-      arquivos.forEach((media, idx)=>{
-        const slide = document.createElement('div');
-        slide.className = 'slide' + (idx===0 ? ' active' : '');
-        if(media.type==='img'){
-          const img = document.createElement('img');
-          img.src = media.src;
-          slide.appendChild(img);
-        } else if(media.type==='video'){
-          const video = document.createElement('video');
-          video.src = media.src;
-          video.poster = media.poster;
-          video.autoplay = true;
-          video.loop = true;
-          video.muted = true;
-          video.playsInline = true;
-          slide.appendChild(video);
-        }
-        gallery.appendChild(slide);
-      });
-      return Array.from(document.querySelectorAll('.slide'));
-    }
+  current++;
+  if(current>=slides.length){
+    slideQueue=shuffle([...mediaFiles]);
+    slides=criarSlides(slideQueue);
+    current=0;
+  }
 
-    // ------------------------
-    // Inicialização
-    // ------------------------
-    let slideQueue = shuffle([...mediaFiles]); // copia e embaralha
-    let slides = criarSlides(slideQueue);
-    let current = 0;
+  slides[current].classList.add('active');
+  const vid = slides[current].querySelector('video');
+  if(vid) vid.play().catch(()=>{ /* autoplay bloqueado */ });
+}
 
-    // Tempo de exibição de cada slide (em ms)
-    const slideTempo = 4000; // 4s
-
-    function nextSlide(){
-      slides[current].classList.remove('active');
-      if(slides[current].querySelector('video')) slides[current].querySelector('video').pause();
-
-      current++;
-
-      if(current >= slides.length){
-        // todos passaram, embaralha de novo
-        slideQueue = shuffle([...mediaFiles]);
-        slides = criarSlides(slideQueue);
-        current = 0;
-      }
-
-      slides[current].classList.add('active');
-      if(slides[current].querySelector('video')) slides[current].querySelector('video').play();
-    }
-
-    // Inicia o slider
-    setInterval(nextSlide, slideTempo);
+// Inicia slider após senha
+setInterval(nextSlide, slideTempo);
 
   } else {    alert("Que isso Susu,não é possível que errou a senha😠");
   }
