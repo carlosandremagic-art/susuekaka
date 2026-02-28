@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaká ❤️ Susu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(120deg, #ff2e63, #000);
+  background-size: 200% 200%;
+  animation: gradientBG 10s ease infinite;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  position: relative; /* importante para que corações se posicionem dentro do body */
+  min-height: 100vh;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.heart {
+  position: absolute;
+  color: #ff2e63;
+  font-size: 16px;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-40px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+}
+h1, h2, h3 { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+.carta { font-family: 'Great Vibes', cursive; font-size: clamp(22px, 5vw, 28px); line-height: 1.6; }
+.reveal{ opacity:0; transform:translateY(40px); transition:all 1.0s ease; }
+.reveal.active{ opacity:1; transform:translateY(0); }
+
+.gallery {
+  width: 90%;
+  max-width: 400px;
+  margin: 40px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+}
+
+.slides {
+  display: flex;
+  width: 100%;
+  transition: transform 1s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: none;
+  position: relative;
+}
+
+.slide.active { display: block; }
+
+.slide img,
+.slide video {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* INTRO */
+#netflixIntro{ position:fixed;width:100%;height:100%;background:#000;display:flex;justify-content:center;align-items:center;z-index:999;overflow:hidden;animation:fadeOut 1.5s ease forwards;animation-delay:4s; }
+.netflix-container{ position:relative; }
+.logoIntro{ font-size:70px;font-weight:900;letter-spacing:10px;color:#e50914;opacity:0;filter:blur(10px);animation:logoReveal 2.5s ease forwards;text-shadow:0 0 10px rgba(229,9,20,0.8),0 0 20px rgba(229,9,20,0.6),0 0 40px rgba(229,9,20,0.4);}
+@keyframes logoReveal{0%{opacity:0;transform:scale(0.7);filter:blur(10px);}60%{opacity:1;filter:blur(0px);}100%{opacity:1;transform:scale(1);filter:blur(0px);}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden;}}
+
+/* SENHA */
+#senhaTela{position:fixed;width:100%;height:100%;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:250;}
+#senhaTela input{padding:10px;font-size:18px;margin:10px;}
+#senhaTela button{padding:10px 25px;border:none;border-radius:20px;background:#ff2e63;color:white;cursor:pointer;}
+
+/* CONTEÚDO */
+#conteudo{display:none;padding-bottom:60px;}
+h1{margin-top:80px;font-size:32px;}
+h2{margin-top:10px;font-weight:300;}
+#contador{margin-top:20px;font-size:18px;padding:0 20px;}
+.frase{margin-top:30px;font-size:20px;min-height:30px;}
+
+/* CORAÇÕES */
+.heart{position:absolute;color:#ff2e63;font-size:18px;animation:floatUp 3s linear forwards;pointer-events:none;}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
+
+/* CARTA */
+#carta{display:none;margin:30px auto;max-width:600px;padding:20px;animation:fade 2s ease;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+button{margin-top:20px;padding:10px 25px;border:none;border-radius:25px;background:#ff2e63;color:white;cursor:pointer;}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="netflixIntro">
+  <div class="netflix-container">
+    <h1 class="logoIntro">KAKÁ ❤️ SUSU</h1>
+    <div class="heartsIntro"></div>
+  </div>
+</div>
+
+<!-- SENHA -->
+<div id="senhaTela">
+<h2>Área secreta de Kaká ❤️ Susu</h2>
+<input type="password" id="senhaInput" placeholder="Digite nossa senha">
+<button onclick="verificarSenha()">Entrar</button>
+</div>
+
+<!-- CONTEÚDO -->
+<div id="conteudo">
+
+<h1>Kaká & Susu ❤️</h1>
+<h2>Desde 17/09/2020</h2>
+<div id="contador" style="font-size:22px; margin-top:20px;"></div>
+<div class="frase" id="frase"></div>
+
+<!-- GALERIA -->
+<div class="gallery">
+  <div class="slides">
+    <!-- Aqui vamos preencher via JS -->
+  </div>
+</div>
+
+<button onclick="mostrarCarta()">Abrir minha carta 💌</button>
+
+<div id="carta">
+Susu,
+<br><br>
+Desde 17/09/2020 minha vida mudou.<br>
+Você é meu melhor presente.<br>
+Eu te amo infinitamente.
+<br><br>
+— Kaká ❤️
+</div>
+
+<audio id="musica" loop playsinline>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+<script>
+// SENHA
+function verificarSenha(){
+  if(document.getElementById("senhaInput").value==="1709"){
+    document.getElementById("senhaTela").style.display="none";
+    document.getElementById("conteudo").style.display="block";
+    iniciarMusica();
+  }else{
+    alert("Que isso Susu,não é possível que errou a senha❤️");
+  }
+}
+
+// CONTADOR
+const inicio = new Date("2020-09-17T00:00:00");
+
+function atualizarContador() {
+  const agora = new Date();
+  let diferenca = agora - inicio; // diferença em milissegundos
+  let segTotais = Math.floor(diferenca / 1000);
+
+  let anos = Math.floor(segTotais / (365 * 24 * 60 * 60));
+  segTotais %= (365 * 24 * 60 * 60);
+
+  let meses = Math.floor(segTotais / (30 * 24 * 60 * 60));
+  segTotais %= (30 * 24 * 60 * 60);
+
+  let dias = Math.floor(segTotais / (24 * 60 * 60));
+  segTotais %= (24 * 60 * 60);
+
+  let horas = Math.floor(segTotais / (60 * 60));
+  segTotais %= (60 * 60);
+
+  let minutos = Math.floor(segTotais / 60);
+  let segundos = segTotais % 60;
+
+  document.getElementById("contador").innerHTML =
+    `${anos} anos ❤️ ${meses} meses ❤️ ${dias} dias<br>
+     ${horas} horas ❤️ ${minutos} minutos ❤️ ${segundos} segundos`;
+}
+setInterval(atualizarContador, 1000);
+atualizarContador();
+
+// FRASES
+const frases=[
+  "Você é meu melhor sorriso ❤️",
+  "Kaká + Susu para sempre 💕",
+  "MEU AMOR POR VOCÊ É MAIOR QUE TODO O UNIVERSO❤️❤️"
+];
+let i=0;
+setInterval(()=>{
+  document.getElementById("frase").innerHTML=frases[i];
+  i=(i+1)%frases.length;
+},4000);
+
+// CARTA
+function mostrarCarta(){
+  document.getElementById("carta").style.display="block";
+}
+
+// MÚSICA
+const musica = document.getElementById("musica");
+function iniciarMusica(){
+  musica.volume = 0;
+  musica.play().then(() => {
+    let volume = 0;
+    let fade = setInterval(()=>{
+      if(volume < 0.5){
+        volume += 0.02;
+        musica.volume = volume;
+      }else{
+        clearInterval(fade);
+      }
+    }, 300);
+  }).catch(()=>{ console.log("Autoplay bloqueado pelo navegador"); });
+}
+
+// SLIDER ALEATÓRIO
+const gallery = document.querySelector('.gallery .slides');
+
+// Cria lista de arquivos: fotos e vídeos
+let mediaFiles = [];
+
+// Fotos
+for(let f=1; f<=17; f++){
+  mediaFiles.push({type:'img', src:`foto${f}.jpg`});
+}
+
+// Vídeos
+for(let v=1; v<=15; v++){
+  mediaFiles.push({type:'video', src:`video${v}.mp4`, poster:`foto${v}.jpg`});
+}
+
+// Função para embaralhar
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i+1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Embaralha
+mediaFiles = shuffle(mediaFiles);
+
+// Cria os slides no DOM
+mediaFiles.forEach((media, idx)=>{
+  const slide = document.createElement('div');
+  slide.className = 'slide' + (idx===0 ? ' active' : '');
+  if(media.type==='img'){
+    const img = document.createElement('img');
+    img.src = media.src;
+    slide.appendChild(img);
+  } else if(media.type==='video'){
+    const video = document.createElement('video');
+    video.src = media.src;
+    video.poster = media.poster;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    slide.appendChild(video);
+  }
+  gallery.appendChild(slide);
+});
+
+// Slider automático
+let current = 0;
+let slides = Array.from(document.querySelectorAll('.slide'));
+setInterval(()=>{
+  slides[current].classList.remove('active');
+  // Pause vídeo anterior
+  if(slides[current].querySelector('video')) slides[current].querySelector('video').pause();
+
+  current = (current+1)%slides.length;
+
+  slides[current].classList.add('active');
+  // Play vídeo atual
+  if(slides[current].querySelector('video')) slides[current].querySelector('video').play();
+}, 2000);
+
+// Criar corações flutuando pelo fundo
+setInterval(() => {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  
+  // posição horizontal e vertical aleatória
+  heart.style.left = Math.random() * 100 + "%";
+  heart.style.top = Math.random() * window.innerHeight + "px";
+  
+  // tamanho aleatório
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  
+  document.body.appendChild(heart);
+  
+  // remove após animação terminar
+  setTimeout(() => heart.remove(), 3000);
+}, 400);
+
+</script>
+</body>
+</html>
